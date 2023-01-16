@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_player/src/widgets/widgets.dart';
 
 class MusicPlayerPage extends StatelessWidget {
@@ -10,6 +11,45 @@ class MusicPlayerPage extends StatelessWidget {
         children: const [
           CustomAppbar(),
           ImagenDiscoDuracion(),
+          TituloPlay(),
+        ],
+      ),
+    );
+  }
+}
+
+class TituloPlay extends StatelessWidget {
+  const TituloPlay({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.only(top: 40),
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Text('Far Away',
+                  style: TextStyle(
+                      fontSize: 30, color: Colors.white.withOpacity(0.8))),
+              Text('-Breakin Benjamin-',
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.white.withOpacity(0.6))),
+            ],
+          ),
+          const Spacer(),
+          FloatingActionButton(
+            elevation: 0,
+            highlightElevation: 0,
+            onPressed: () {
+              // TODO: Botón
+            },
+            backgroundColor: Colors.indigo,
+            child: const Icon(FontAwesomeIcons.play),
+          )
         ],
       ),
     );
