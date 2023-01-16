@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_player/src/helpers/helpers.dart';
+import 'package:music_player/src/models/audioplayer_model.dart';
 import 'package:music_player/src/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class MusicPlayerPage extends StatelessWidget {
   const MusicPlayerPage({Key? key}) : super(key: key);
@@ -122,12 +124,16 @@ class _TituloPlayState extends State<TituloPlay>
               elevation: 0,
               highlightElevation: 0,
               onPressed: () {
+                final audioPlayerModel =
+                    Provider.of<AudioPlayerModel>(context, listen: false);
                 if (isPlaying) {
                   playAnimation.reverse();
                   isPlaying = false;
+                  audioPlayerModel.controller.stop();
                 } else {
                   playAnimation.forward();
                   isPlaying = true;
+                  audioPlayerModel.controller.repeat();
                 }
               },
               backgroundColor: Colors.indigo,
@@ -214,6 +220,7 @@ class ImagenDisco extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final audioPlayerModel = Provider.of<AudioPlayerModel>(context);
     return Container(
       padding: const EdgeInsets.all(20),
       width: 250,
@@ -229,7 +236,14 @@ class ImagenDisco extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              const Image(image: AssetImage('assets/nesuko.png')),
+              SpinPerfect(
+                duration: const Duration(seconds: 10),
+                infinite: true,
+                manualTrigger: true,
+                controller: (animationController) =>
+                    audioPlayerModel.controller = animationController,
+                child: const Image(image: AssetImage('assets/nesuko.png')),
+              ),
               Container(
                 width: 25,
                 height: 25,
